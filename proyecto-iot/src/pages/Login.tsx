@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../api/user.api';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -7,15 +8,17 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault(); // Evita que el formulario se envíe automáticamente
+    e.preventDefault();
 
     try {
-      console.log('Inicio de sesión exitoso:');
+      const response = await loginUser(username, password);
+      console.log('Inicio de sesión exitoso:', response);
       navigate('/dashboard');
     } catch (error) {
       console.error('Error en el inicio de sesión:', error);
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
