@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { User, FileText, Clipboard, ChevronDown } from "react-feather";
 import { Link } from "react-router-dom";
 import { LoginAuth } from "../types/loginService";
+import Header from "./Header";
 
 const Sidebar: React.FC = () => {
   const [solicitudOpen, setSolicitudOpen] = useState(false);
@@ -21,7 +22,13 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="bg-gray-900 text-white w-1/5 h-screen fixed top-0 left-0 p-4 z-10">
-      <div className="text-3xl font-bold mb-6 text-blue-400">Dashboard</div>
+      <Header />
+      <div className="pl-4 mt-16 ml-1">
+          <Link
+            to="/Dashboard"
+            className="text-3xl font-bold mb-6 text-blue-400">Dashboard
+          </Link>
+          </div>
 
       <div className="mb-6">
         <div className="flex items-center mb-2">
@@ -49,12 +56,7 @@ const Sidebar: React.FC = () => {
           >
             <Clipboard className="w-4 h-4 inline mr-1" /> Listar usuarios
           </Link>
-          <Link
-            to="/registrar/usuarios"
-            className="block text-white hover:text-blue-500 mb-2"
-          >
-            <Clipboard className="w-4 h-4 inline mr-1" /> Registrar usuario
-          </Link>
+        
         </div>
       )}
     </div>

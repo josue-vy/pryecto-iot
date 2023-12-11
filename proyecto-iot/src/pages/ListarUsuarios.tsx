@@ -19,7 +19,7 @@ const UsuariosListar: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center mt-20 ml-60">
       <div className="w-full max-w-3xl p-6">
         <h2 className="text-3xl font-bold mb-6 text-center">Listado de Usuarios</h2>
         <div className="overflow-x-auto">
@@ -27,7 +27,6 @@ const UsuariosListar: React.FC = () => {
             <thead className="bg-gray-200 text-gray-700">
               <tr>
                 <th className="py-3 px-4 border border-gray-300">Nombre</th>
-                <th className="py-3 px-4 border border-gray-300">Apellido</th>
                 <th className="py-3 px-4 border border-gray-300">Correo</th>
                 {/* <th className="py-3 px-4 border border-gray-300">Tipo de Usuario</th> */}
               </tr>
@@ -36,7 +35,6 @@ const UsuariosListar: React.FC = () => {
               {usuarios.map((usuario) => (
                 <tr key={usuario.id} className="hover:bg-gray-50">
                   <td className="py-2 px-4 border border-gray-300">{usuario.nombre}</td>
-                  <td className="py-2 px-4 border border-gray-300">{usuario.apellido}</td>
                   <td className="py-2 px-4 border border-gray-300">{usuario.correo}</td>
                 </tr>
               ))}
