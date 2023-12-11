@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../api/user.api';
+import { login } from '../api/user.api';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -9,10 +9,11 @@ const Login: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     try {
-      const response = await loginUser(username, password);
+      const response = await login(username, password);
       console.log('Inicio de sesión exitoso:', response);
+      localStorage.setItem('userDetails', JSON.stringify(response));
       navigate('/dashboard');
     } catch (error) {
       console.error('Error en el inicio de sesión:', error);
@@ -45,7 +46,7 @@ const Login: React.FC = () => {
           </div>
           <div>
             <button
-              type="submit" // Utiliza type="submit" para enviar el formulario
+              type="submit"
               className="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
             >
               Iniciar Sesión

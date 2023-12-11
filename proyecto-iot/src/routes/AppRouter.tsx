@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import Layout from "../components/Layout/Layout";
 import Sidebar from "../components/sidebar";
 import Dashboard from "../components/Dashboard";
+import UsuariosListar from "../pages/ListarUsuarios";
 
 const AppRouter: React.FC = () => {
   return (
@@ -15,6 +16,15 @@ const AppRouter: React.FC = () => {
           <Layout>
             <Sidebar />
             <Dashboard />
+          </Layout>
+        }
+      />
+      <Route
+        path="/listar/usuarios"
+        element={
+          <Layout>
+            <Sidebar />
+            <UsuariosListar />
           </Layout>
         }
       />

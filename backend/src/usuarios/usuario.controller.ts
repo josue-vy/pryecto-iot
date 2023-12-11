@@ -7,12 +7,13 @@ import {
   Param,
   ParseIntPipe,
   Patch,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from './usuario.service';
-import { Usuarios } from './usuario.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login.user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { ListUserDto } from './dto/list-user.dto';
 
 @Controller('usuarios')
 export class UsersController {
@@ -23,8 +24,13 @@ export class UsersController {
     return this.usersService.getUsers();
   }
   @Post()
-  createUser(@Body() body: CreateUserDto) {
-    return this.usersService.createUser(body);
+  async createUserWithRole(@Body() createUserDto: CreateUserDto) {
+    try {
+      const user = await this.usersService.createUser(createUserDto);
+      return { user, message: 'usuario creado con su rol correspondiente.' };
+    } catch (error) {
+      return { message: 'Error al crear usuario con su rol' };
+    }
   }
 
   @Delete(':id')
@@ -40,17 +46,21 @@ export class UsersController {
     return this.usersService.updateUser(id, user);
   }
   @Post('login')
-  login(@Body() loginUser: LoginUserDto): Promise<Usuarios> {
-    return this.usersService.loginUser(loginUser);
+  async loginUser(@Body() loginUserDto: LoginUserDto): Promise<ListUserDto> {
+    const usuario = await this.usersService.loginUser(loginUserDto);
+
+    if (!usuario) {
+      throw new UnauthorizedException('Credenciales inválidas');
+    }
+
+    const userRoles = usuario.roles.map((rol) => rol.usuarioRol);
+    const userDto: ListUserDto = {
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      correo: usuario.correo,
+      roles: userRoles,
+    };
+
+    return userDto;
   }
 }
-// @Controller('tipousuarios')
-// export class UserTipoController {
-//   constructor(private usersService: UsersService) {}
-//   @Post(':id/tipouser')
-//   createTipoUser(
-//     @Param('id', ParseIntPipe) id: number,
-//     @Body() tipoUsuarios: CreateTipoUserDto,
-//   ) {
-//     this.usersService.createTipoUser(id, tipoUsuarios);
-//   }
